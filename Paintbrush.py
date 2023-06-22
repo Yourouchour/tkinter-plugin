@@ -4,11 +4,11 @@ from typing import List, Tuple
 class Paintbrush:
     def __init__(self, canvas:tk.Canvas, color='black', width=1):
         '''
-        初始化画笔，并且将画布绑定鼠标事件
+        Initialize the paintbrush and bind mouse events to the canvas.
 
-        :param canvas: 画布对象
-        :param color: 画笔颜色，默认为黑色
-        :param width: 画笔宽度，默认为1
+        :param canvas: canvas object
+        :param color: paintbrush color, default is black
+        :param width: paintbrush width, default is 1
         '''
         canvas.bind("<B1-Motion>",self._duration)
         canvas.bind("<ButtonPress-1>",self._start)
@@ -16,16 +16,16 @@ class Paintbrush:
         self._logs:List[Tuple[int,int]] = []
         self._canvas = canvas
         self.color = color
-        '''画笔颜色'''
+        '''Paintbrush color'''
 
         self.width = width
-        '''画笔宽度'''
+        '''Paintbrush width'''
 
     def undo(self, n=1):
         '''
-        撤销指定次数的操作
+        Undo the specified amount of operations.
 
-        :param n: 要撤销的次数，默认为1
+        :param n: number of operations to undo, default is 1
         '''
         if n >= len(self._logs):
             self.clear()
@@ -37,7 +37,7 @@ class Paintbrush:
 
     def clear(self):
         '''
-        清空所有的操作
+        Clear all operations.
         '''
         for start_id, end_id in self._logs:
             for i in range(start_id,end_id+1):
@@ -48,7 +48,7 @@ class Paintbrush:
         self._end_x = event.x
         self._end_y = event.y
 
-        #这里只是记录一下id
+        # Only record the id here.
         self._start_id = self._canvas.create_oval(self._end_x,self._end_y,self._end_x,self._end_y,fill=self.color)
         self._end_id = self._start_id
 
